@@ -1,0 +1,22 @@
+{
+  "name": "proj-api-airline",
+  "version": "1.0.0",
+  "description": "Airline app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vlari/Proj-Api-Airline.git"
+  },
+  "keywords": [
+    "api"
+  ],
+  "author": "vlari",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vlari/Proj-Api-Airline/issues"
+  },
+  "homepage": "https://github.com/vlari/Proj-Api-Airline#readme"
+}
