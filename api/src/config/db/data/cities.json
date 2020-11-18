@@ -1,0 +1,58 @@
+[
+  {
+    "name": "Gdansk",
+    "CountryId": 33
+  },
+  {
+    "name": "Warsaw",
+    "CountryId": 33
+  },
+  {
+    "name": "Sochi",
+    "CountryId": 36
+  },
+  {
+    "name": "Kiev",
+    "CountryId": 41
+  },
+  {
+    "name": "Odessa",
+    "CountryId": 41
+  },
+  {
+    "name": "Berlin",
+    "CountryId": 15
+  },
+  {
+    "name": "Hamburg",
+    "CountryId": 15
+  },
+  {
+    "name": "Riga",
+    "CountryId": 24
+  },
+  {
+    "name": "Barcelona",
+    "CountryId": 40
+  },
+  {
+    "name": "Madrid",
+    "CountryId": 40
+  },
+  {
+    "name": "Toronto",
+    "CountryId": 6
+  },
+  {
+    "name": "Quebec",
+    "CountryId": 6
+  },
+  {
+    "name": "Vancouver",
+    "CountryId": 6
+  },
+  {
+    "name": "New York",
+    "CountryId": 49
+  }
+]

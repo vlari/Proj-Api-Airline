@@ -1,0 +1,198 @@
+[
+  {
+    "name": "Austria",
+    "RegionId": 4
+  },
+  {
+    "name": "Belarus",
+    "RegionId": 4
+  },
+  {
+    "name": "Belgium",
+    "RegionId": 4
+  },
+  {
+    "name": "Bosnia and Herzegovina",
+    "RegionId": 4
+  },
+  {
+    "name": "Bulgaria",
+    "RegionId": 4
+  },
+  {
+    "name": "Canada",
+    "RegionId": 4
+  },
+  {
+    "name": "Croatia",
+    "RegionId": 4
+  },
+  {
+    "name": "Czech Republic",
+    "RegionId": 4
+  },
+  {
+    "name": "Denmark",
+    "RegionId": 4
+  },
+  {
+    "name": "England",
+    "RegionId": 4
+  },
+  {
+    "name": "Estonia",
+    "RegionId": 4
+  },
+  {
+    "name": "Finland",
+    "RegionId": 4
+  },
+  {
+    "name": "France",
+    "RegionId": 4
+  },
+  {
+    "name": "Georgia",
+    "RegionId": 4
+  },
+  {
+    "name": "Germany",
+    "RegionId": 4
+  },
+  {
+    "name": "Greece",
+    "RegionId": 4
+  },
+  {
+    "name": "Greenland",
+    "RegionId": 4
+  },
+  {
+    "name": "Holy See (Vatican City State)",
+    "RegionId": 4
+  },
+  {
+    "name": "Hungary",
+    "RegionId": 4
+  },
+  {
+    "name": "Iceland",
+    "RegionId": 4
+  },
+  {
+    "name": "Ireland",
+    "RegionId": 4
+  },
+  {
+    "name": "Israel",
+    "RegionId": 4
+  },
+  {
+    "name": "Italy",
+    "RegionId": 4
+  },
+  {
+    "name": "Latvia",
+    "RegionId": 4
+  },
+  {
+    "name": "Liechtenstein",
+    "RegionId": 4
+  },
+  {
+    "name": "Lithuania",
+    "RegionId": 4
+  },
+  {
+    "name": "Luxembourg",
+    "RegionId": 4
+  },
+  {
+    "name": "Moldova",
+    "RegionId": 4
+  },
+  {
+    "name": "Monaco",
+    "RegionId": 4
+  },
+  {
+    "name": "Netherlands",
+    "RegionId": 4
+  },
+  {
+    "name": "New Zealand",
+    "RegionId": 4
+  },
+  {
+    "name": "Norway",
+    "RegionId": 4
+  },
+  {
+    "name": "Poland",
+    "RegionId": 4
+  },
+  {
+    "name": "Portugal",
+    "RegionId": 4
+  },
+  {
+    "name": "Romania",
+    "RegionId": 4
+  },
+  {
+    "name": "Russian Federation",
+    "RegionId": 4
+  },
+  {
+    "name": "Scotland",
+    "RegionId": 4
+  },
+  {
+    "name": "Serbia",
+    "RegionId": 4
+  },
+  {
+    "name": "Slovakia",
+    "RegionId": 4
+  },
+  {
+    "name": "Spain",
+    "RegionId": 4
+  },
+  {
+    "name": "Ukraine",
+    "RegionId": 4
+  },
+  {
+    "name": "United Kingdom",
+    "RegionId": 4
+  },
+  {
+    "name": "Japan",
+    "RegionId": 2
+  },
+  {
+    "name": "Dominican Republic",
+    "RegionId": 3
+  },
+  {
+    "name": "Cuba",
+    "RegionId": 3
+  },
+  {
+    "name": "South Korea",
+    "RegionId": 2
+  },
+  {
+    "name": "United Arab Emirates",
+    "RegionId": 5
+  },
+  {
+    "name": "Egypt",
+    "RegionId": 5
+  },
+  {
+    "name": "New York",
+    "RegionId": 1
+  }
+]

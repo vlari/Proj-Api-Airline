@@ -1,26 +1,49 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
-const env = require('../config/env');
 const morgan = require('morgan');
+const chalk = require('chalk');
 
+const env = require('../config/env');
+const sequelize = require('../config/db/db');
+const dbConnection = require('../config/db/dbConnection');
 const errorHandlerService = require('../services/errorHandlerService');
+const seedDatabase = require('../config/db/seeder');
+const routes = require('./routes');
 
-const app = express();
+const loadApp = async () => {
+  const app = express();
 
-// Cors setup here
+  // Cors setup here
 
-app.use(express.json());
-app.use(cookieParser());
+  app.use(express.json());
+  app.use(cookieParser());
 
-if (env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
-}
+  if (env.NODE_ENV === 'development') {
+    app.use(morgan('dev'));
+  }
 
-// Routing here
+  try {
+    await sequelize.authenticate();
+    await sequelize.sync({ force: true });
 
+    seedDatabase();
 
-app.use((error, req, res, next) => {
-  errorHandlerService.handleError(error, res);
-});
+    console.log(
+      chalk.inverse.yellow(
+        'Database connection has been stablished successfully'
+      )
+    );
+  } catch (error) {
+    console.log(chalk.inverse.red('Unable to connect to the database', error));
+  }
 
-module.exports = app;
+  app.use(routes);
+
+  app.use((error, req, res, next) => {
+    errorHandlerService.handleError(error, res);
+  });
+
+  return app;
+};
+
+module.exports = loadApp;
