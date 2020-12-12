@@ -1,9 +1,18 @@
 const Airport = require('./airport');
 
-exports.getAll = async () => {
+exports.getAll = async (queryParams) => {
   try {
+    let query = '';
+
+    if (queryParams) {
+      query = {
+        where: queryParams,
+      };
+    }
+
     const airports = await Airport.findAll({
       order: [['code']],
+      ...query,
     });
 
     return airports;
@@ -21,7 +30,9 @@ exports.getByCode = async (code) => {
       order: [['code']],
     });
 
-    return airports;
+    console.log('airports', airports);
+
+    return airports[0];
   } catch (error) {
     return error;
   }
@@ -41,6 +52,7 @@ exports.getByName = async (name) => {
     return error;
   }
 };
+
 exports.add = async (airport) => {
   try {
     const registeredAirport = await Airport.create(airport);

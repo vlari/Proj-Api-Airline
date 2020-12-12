@@ -4,7 +4,7 @@ const locationDataService = require('./locationDataService');
 
 exports.getRegions = async (req, res, next) => {
   try {
-    const regions = locationDataService.getRegions();
+    const regions = await locationDataService.getRegions();
 
     sendJsonResponse(200, { data: regions, count: regions.length }, res);
   } catch (error) {
@@ -14,7 +14,7 @@ exports.getRegions = async (req, res, next) => {
 
 exports.getCountries = async (req, res, next) => {
   try {
-    const countries = locationDataService.getCountries();
+    const countries = await locationDataService.getCountries();
 
     sendJsonResponse(200, { data: countries, count: countries.length }, res);
   } catch (error) {
@@ -24,7 +24,7 @@ exports.getCountries = async (req, res, next) => {
 
 exports.getCities = async (req, res, next) => {
   try {
-    const cities = locationDataService.getCities();
+    const cities = await locationDataService.getCities();
 
     sendJsonResponse(200, { data: cities, count: cities.length }, res);
   } catch (error) {

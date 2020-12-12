@@ -3,13 +3,10 @@ const airportController = require('./airportController');
 
 const router = express.Router();
 
-// Add req validator middleware
 router
   .route('/airports')
   .get(
-    airportController.getAirports,
-    airportController.getAirportByCode,
-    airportController.getAirportByName
+    airportController.getAirports
   )
   .post(airportController.addAirport);
 

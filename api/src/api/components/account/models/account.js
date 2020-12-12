@@ -1,14 +1,16 @@
 const sequelize = require('../../../../config/db/db');
 const { DataTypes } = require('sequelize');
 const DocumentType = require('./documentType');
-const Seat = require('../../flight/models/seat');
-const EmergencyContact = require('.//emergencyContact');
 
-const Traveler = sequelize.define('Traveler', {
+const Account = sequelize.define('Account', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
+    allowNull: false,
+  },
+  travelerCode: {
+    type: DataTypes.STRING,
     allowNull: false,
   },
   firstName: {
@@ -19,19 +21,7 @@ const Traveler = sequelize.define('Traveler', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  middleName: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  suffix: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
   documentNumber: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  gender: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -46,16 +36,19 @@ const Traveler = sequelize.define('Traveler', {
   phone: {
     type: DataTypes.STRING,
     allowNull: false,
-  }
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  available: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+    allowNull: false,
+  },
 });
 
-DocumentType.hasMany(Traveler);
-Traveler.belongsTo(DocumentType);
+DocumentType.hasMany(Account);
+Account.belongsTo(DocumentType);
 
-Seat.hasMany(Traveler);
-Traveler.belongsTo(Seat);
-
-EmergencyContact.hasOne(Traveler, { onDelete: 'CASCADE' });
-Traveler.belongsTo(EmergencyContact);
-
-module.exports = Traveler;
+module.exports = Account;

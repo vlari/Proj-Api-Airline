@@ -1,4 +1,4 @@
-const sequelize = require('../../../config/db/db');
+const sequelize = require('../../../../config/db/db');
 const { DataTypes } = require('sequelize');
 
 const SeatType = sequelize.define('SeatType', {
@@ -14,7 +14,7 @@ const SeatType = sequelize.define('SeatType', {
   },
   description: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
 });
 

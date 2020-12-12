@@ -1,3 +1,4 @@
+const chalk = require('chalk');
 const responseService = require('../../../services/responseService');
 const sessionDataService = require('./sessionDataService');
 const authService = require('../../../services/authService');
@@ -9,20 +10,42 @@ const { sendJsonResponse, sendCookie, sendErrorResponse } = responseService;
 exports.signUp = async (req, res, next) => {
   try {
     const email = req.body.email;
-    const registeredAccount = sessionDataService.getByEmail(email);
+    const registeredAccount = await sessionDataService.getByEmail(email);
 
     if (registeredAccount) {
       return next(sendErrorResponse(400, 'Account already registered'));
     }
 
     const account = req.body;
-    const registeredTraveler = sessionDataService.addAccount(account);
+    const registeredTraveler = await sessionDataService.addAccount(account);
 
-    sendJsonResponse(
-      201,
-      { message: 'Account created', account: registeredTraveler },
-      res
-    );
+    const emailOptions = {
+      type: 'newAccount',
+      email,
+    };
+
+    const emailSettings = mailService.getEmailSettings(emailOptions);
+    const transporter = mailService.getTransporter();
+
+    transporter.verify((error, success) => {
+      if (error) {
+        return next(sendErrorResponse(500, `SMTP connection error. ${error}`));
+      } else {
+        console.log(chalk.green.inverse('SMTP connection ready'));
+      }
+    });
+
+    transporter.sendMail(emailSettings, (error, info) => {
+      if (error) {
+        return next(sendErrorResponse(500));
+      } else {
+        sendJsonResponse(
+          201,
+          { message: 'Account created', account: registeredTraveler },
+          res
+        );
+      }
+    });
   } catch (error) {
     next(sendErrorResponse(500, error));
   }
@@ -31,15 +54,15 @@ exports.signUp = async (req, res, next) => {
 exports.signIn = async (req, res, next) => {
   try {
     const email = req.body.email;
-    const registeredAccount = sessionDataService.getByEmail(email);
+    const registeredAccount = await sessionDataService.getByEmail(email);
 
-    if (registeredAccount) {
-      return next(sendErrorResponse(400, 'Account already registered'));
+    if (!registeredAccount) {
+      return next(sendErrorResponse(404, 'Invalid user account'));
     }
 
     const password = req.body.password;
-    const registeredPassword = registeredAccount.password;
-    const isValidPassword = authService.isValidPassword(
+    const registeredPassword = registeredAccount.dataValues.password;
+    const isValidPassword = await authService.isValidPassword(
       password,
       registeredPassword
     );
@@ -60,7 +83,7 @@ exports.signIn = async (req, res, next) => {
 exports.forgotPassword = async (req, res, next) => {
   try {
     const email = req.body.email;
-    const registeredAccount = sessionDataService.getByEmail(email);
+    const registeredAccount = await sessionDataService.getByEmail(email);
 
     if (!registeredAccount) {
       return next(sendErrorResponse(401, 'Invalid user account'));
@@ -71,7 +94,9 @@ exports.forgotPassword = async (req, res, next) => {
     const secretKey = authService.getHashedKey({ password, createdAt });
     const token = authService.getSignedToken({ id, email }, secretKey);
 
-    const resetUrl = `${req.protocol}://domain.com/route/${id}/${token}`;
+    const resetUrl = `${req.protocol}://${req.get(
+      'host'
+    )}/route/${id}/${token}`;
 
     const emailOptions = {
       type: 'forgotPassword',
@@ -109,7 +134,7 @@ exports.forgotPassword = async (req, res, next) => {
 exports.resetPassword = async (req, res, next) => {
   try {
     const { id, token, requestedPassword } = req.body;
-    const registeredAccount = sessionDataService.getById(id);
+    const registeredAccount = await sessionDataService.getById(id);
 
     if (!registeredAccount) {
       return next(sendErrorResponse(401, 'Account already registered'));
@@ -121,11 +146,13 @@ exports.resetPassword = async (req, res, next) => {
     const userToken = authService.getDecodedToken(token, secretKey);
 
     if (userToken.id === id) {
-      registeredAccount.password = authService.getHashedPassword(
+      registeredAccount.password = await authService.getHashedPassword(
         requestedPassword
       );
 
-      const account = sessionDataService.saveAccountDetails(registeredAccount);
+      const account = await sessionDataService.saveAccountDetails(
+        registeredAccount
+      );
       sendJsonResponse(200, { message: 'Password updated' }, res);
     } else {
       next(sendErrorResponse(500, error));

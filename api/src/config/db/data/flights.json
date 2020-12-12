@@ -1,0 +1,22 @@
+[
+  {
+    "flightNumber": "F001",
+    "departureDate": "2021-08-08",
+    "totalMiles": "200",
+    "gate": "A2",
+    "price": "450.50",
+    "available": true,
+    "departureAirportId": 1,
+    "destinationAirportId": 5
+  },
+  {
+    "flightNumber": "F002",
+    "departureDate": "2021-08-09",
+    "totalMiles": "200",
+    "gate": "A1",
+    "price": "460.50",
+    "available": true,
+    "departureAirportId": 5,
+    "destinationAirportId": 1 
+  }
+]

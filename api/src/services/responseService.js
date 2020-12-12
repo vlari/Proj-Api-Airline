@@ -11,7 +11,7 @@ exports.sendCookie = (statusCode, token, res) => {
       expire: new Date() + 360000,
       httpOnly: true,
     })
-    .jso({ userToken: token });
+    .json({ userToken: token });
 };
 
 exports.sendErrorResponse = (statusCode, message = '') => {

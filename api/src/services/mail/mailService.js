@@ -1,8 +1,9 @@
 const nodemailer = require('nodemailer');
 const env = require('../../config/env');
 
-// Import templates here
+// Email templates
 const forgotPasswordTemplate = require('./templates/forgotPassword');
+const newAccountTemplate = require('./templates/newAccountTemplate');
 
 exports.getTransporter = () => {
   const transporter = nodemailer.createTransport({
@@ -17,12 +18,24 @@ exports.getTransporter = () => {
 };
 
 exports.getEmailSettings = (options) => {
-  const { type, email, resetUrl } = options;
+  const { type, email } = options;
   let template;
+  let subject = '';
 
   switch (type) {
     case 'forgotPassword':
+      const { resetUrl } = options;
       template = forgotPasswordTemplate({ email, resetUrl });
+      subject = 'Reset Password';
+      break;
+    case 'newAccount':
+      template = newAccountTemplate();
+      subject = 'New Account';
+      break;
+    case 'newOrder':
+      const { flights, travelers } = options;
+      template = newAccountTemplate({ flights, travelers });
+      subject = 'Your Next Flight Order';
       break;
     default:
       break;
@@ -31,7 +44,7 @@ exports.getEmailSettings = (options) => {
   const emailSettings = {
     from: env.MAIL_USER,
     to: email,
-    subject: 'Reset Password',
+    subject,
     html: `${template}`,
     amp: `<!doctype html>
     <html ⚡4email>

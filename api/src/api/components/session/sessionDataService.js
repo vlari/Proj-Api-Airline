@@ -1,9 +1,9 @@
-const Traveler = require('../account/models/traveler');
+const Account = require('../account/models/account');
 const authService = require('../../../services/authService');
 
 exports.getByEmail = async (email) => {
   try {
-    const account = await Traveler.findOne({
+    const account = await Account.findOne({
       where: {
         email,
       },
@@ -17,7 +17,7 @@ exports.getByEmail = async (email) => {
 
 exports.getById = async (id) => {
   try {
-    const account = await Traveler.findOne({
+    const account = await Account.findOne({
       where: {
         id,
       },
@@ -31,14 +31,14 @@ exports.getById = async (id) => {
 
 exports.addAccount = async (account) => {
   try {
-    const registeredAccounts = await Traveler.Count();
-    const hashedPassword = authService.getHashedPassword(account.password);
+    const registeredAccounts = await Account.count();
+    const hashedPassword = await authService.getHashedPassword(account.password);
 
     account.password = hashedPassword;
-    account.travelerCode = `T${registeredAccounts + 1}`;
+    account.accountCode = `T${registeredAccounts + 1}`;
     account.available = true;
 
-    const registeredAccount = await Traveler.create(account);
+    const registeredAccount = await Account.create(account);
 
     return registeredAccount;
   } catch (error) {

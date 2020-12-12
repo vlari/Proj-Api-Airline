@@ -1,6 +1,8 @@
-const sequelize = require('../../../config/db/db');
+const sequelize = require('../../../../config/db/db');
 const { DataTypes } = require('sequelize');
 const Airport = require('../../airport/airport');
+const FlightOrder = require('./flightOrder');
+const Order = require('../../order/models/order');
 
 const Flight = sequelize.define('Flight', {
   id: {
@@ -13,7 +15,7 @@ const Flight = sequelize.define('Flight', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  departDate: {
+  departureDate: {
     type: DataTypes.DATEONLY,
     allowNull: false,
   },
@@ -26,7 +28,7 @@ const Flight = sequelize.define('Flight', {
     allowNull: false,
   },
   price: {
-    type: DataTypes.DECIMAL,
+    type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
   },
   available: {
@@ -35,7 +37,21 @@ const Flight = sequelize.define('Flight', {
   },
 });
 
-Airport.hasMany(Flight);
-Flight.belongsTo(Airport);
+Airport.hasMany(Flight, {
+  foreignKey: {
+    name: 'departureAirportId',
+    allowNull: false
+  },
+});
+
+Airport.hasMany(Flight, {
+  foreignKey: {
+    name: 'destinationAirportId',
+    allowNull: false
+  }
+});
+
+Flight.belongsToMany(Order, { through: FlightOrder });
+Order.belongsToMany(Flight, { through: FlightOrder });
 
 module.exports = Flight;

@@ -1,6 +1,7 @@
-const sequelize = require('../../../config/db/db');
+const sequelize = require('../../../../config/db/db');
 const { DataTypes } = require('sequelize');
 const PaymentOption = require('./paymentOption');
+const Account = require('../../account/models/account');
 
 const Order = sequelize.define('Order', {
   id: {
@@ -33,5 +34,8 @@ const Order = sequelize.define('Order', {
 
 PaymentOption.hasMany(Order);
 Order.belongsTo(PaymentOption);
+
+Account.hasOne(Order);
+Order.belongsTo(Account);
 
 module.exports = Order;

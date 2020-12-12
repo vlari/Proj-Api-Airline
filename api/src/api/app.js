@@ -8,7 +8,7 @@ const sequelize = require('../config/db/db');
 const dbConnection = require('../config/db/dbConnection');
 const errorHandlerService = require('../services/errorHandlerService');
 const seedDatabase = require('../config/db/seeder');
-const routes = require('./routes');
+const router = require('./routes');
 
 const loadApp = async () => {
   const app = express();
@@ -37,7 +37,7 @@ const loadApp = async () => {
     console.log(chalk.inverse.red('Unable to connect to the database', error));
   }
 
-  app.use(routes);
+  app.use(router);
 
   app.use((error, req, res, next) => {
     errorHandlerService.handleError(error, res);

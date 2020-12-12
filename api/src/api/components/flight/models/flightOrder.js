@@ -20,7 +20,4 @@ const FlightOrder = sequelize.define('FlightOrder', {
   },
 });
 
-Flight.belongsToMany(Order, { through: FlightOrder });
-Order.belongsToMany(Flight, { through: FlightOrder });
-
 module.exports = FlightOrder;

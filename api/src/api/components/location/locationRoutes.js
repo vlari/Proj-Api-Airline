@@ -5,8 +5,8 @@ const router = express.Router();
 
 const { getRegions, getCountries, getCities } = locationController;
 
-router.route('/regions').post(getRegions);
-router.route('/countries').post(getCountries);
-router.route('/cities').post(getCities);
+router.route('/regions').get(getRegions);
+router.route('/countries').get(getCountries);
+router.route('/cities').get(getCities);
 
 module.exports = router;

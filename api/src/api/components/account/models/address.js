@@ -1,5 +1,6 @@
-const sequelize = require('../../../config/db/db');
+const sequelize = require('../../../../config/db/db');
 const { DataTypes } = require('sequelize');
+const Traveler = require('./traveler');
 
 const Address = sequelize.define('Address', {
   id: {
@@ -29,5 +30,8 @@ const Address = sequelize.define('Address', {
     allowNull: true,
   },
 });
+
+Traveler.hasMany(Address);
+Address.belongsTo(Traveler);
 
 module.exports = Address;

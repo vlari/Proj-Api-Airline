@@ -1,4 +1,4 @@
-const sequelize = require('../../../config/db/db');
+const sequelize = require('../../../../config/db/db');
 const { DataTypes } = require('sequelize');
 
 const PaymentOption = sequelize.define('PaymentOption', {
