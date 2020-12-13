@@ -6,6 +6,10 @@ const env = require('../../config/env');
 exports.guard = async (req, res, next) => {
   let userToken = '';
 
+  if (req.path === '/orders' && req.method === 'POST') {
+    next();
+  }
+
   if (req.cookies.userToken) {
     userToken = req.cookies.userToken;
   }

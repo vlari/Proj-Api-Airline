@@ -30,8 +30,6 @@ exports.getByCode = async (code) => {
       order: [['code']],
     });
 
-    console.log('airports', airports);
-
     return airports[0];
   } catch (error) {
     return error;

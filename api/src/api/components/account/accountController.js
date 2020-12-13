@@ -7,8 +7,6 @@ exports.getAccountDetails = async (req, res, next) => {
   try {
     const id = req.user.dataValues.id;
 
-    console.log(req.user.dataValues);
-
     const accountDetails = await accountDataService.getAccount(id);
 
     sendJsonResponse(200, { data: accountDetails }, res);

@@ -1,6 +1,18 @@
-const Flight = require('../flight/models/flight');
 const Order = require('./models/order');
-const { Op } = require('sequelize');
+
+exports.getAccountOrders = async (id) => {
+  try {
+    const flights = await Order.findAll({
+      where: {
+        id,
+      },
+    });
+
+    return flights;
+  } catch (error) {
+    return error;
+  }
+};
 
 exports.getOrderFlights = async (registeredOrder) => {
   try {
@@ -25,7 +37,6 @@ exports.addOrder = async (order) => {
 exports.addFlights = async (registeredOrder, orderFlights) => {
   try {
     const order = await registeredOrder.addFlights(orderFlights);
-    console.log('added flights');
 
     return order;
   } catch (error) {

@@ -37,14 +37,16 @@ const Flight = sequelize.define('Flight', {
   },
 });
 
-Airport.hasMany(Flight, {
+// Airport.hasMany(Flight);
+Flight.belongsTo(Airport, {
   foreignKey: {
     name: 'departureAirportId',
     allowNull: false
   },
 });
 
-Airport.hasMany(Flight, {
+// Airport.hasMany(Flight);
+Flight.belongsTo(Airport, {
   foreignKey: {
     name: 'destinationAirportId',
     allowNull: false

@@ -13,7 +13,6 @@ exports.getFlights = async (req, res, next) => {
     } = req.query;
     const reponse = {};
 
-    console.log('response: ', response);
     const departureFlights = await flightDataService.getAll({
       flightDate: departureDate,
       departureAirportId,

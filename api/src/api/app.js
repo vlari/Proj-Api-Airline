@@ -9,11 +9,15 @@ const dbConnection = require('../config/db/dbConnection');
 const errorHandlerService = require('../services/errorHandlerService');
 const seedDatabase = require('../config/db/seeder');
 const router = require('./routes');
+const cors = require('cors');
+const helmet = require('helmet');
 
 const loadApp = async () => {
   const app = express();
 
-  // Cors setup here
+  app.use(helmet());
+
+  app.use(cors());
 
   app.use(express.json());
   app.use(cookieParser());

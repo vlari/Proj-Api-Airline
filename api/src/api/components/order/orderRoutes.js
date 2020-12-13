@@ -5,16 +5,11 @@ const orderValidator = require('../../middleware/requestValidators/orderValidato
 
 const router = express.Router();
 
-const {
-  getOrders,
-  getOrderByFlight,
-  placeOrder
-} = orderController;
+const { getOrders, placeOrder } = orderController;
 
 router
   .route('/orders')
-  .get( getOrders)
-  .get(auth.guard, getOrderByFlight)
-  .post(orderValidator.validateOrderSubmit, placeOrder);
+  .get(auth.guard, getOrders)
+  .post(auth.guard, orderValidator.validateOrderSubmit, placeOrder);
 
 module.exports = router;

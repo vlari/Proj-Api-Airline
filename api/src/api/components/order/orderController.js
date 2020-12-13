@@ -4,10 +4,15 @@ const flightDataService = require('../flight/flightDataService');
 const mailService = require('../../../services/mail/mailService');
 const { sendJsonResponse, sendErrorResponse } = responseService;
 const Order = require('./models/order');
+const chalk = require('chalk');
 
 exports.getOrders = async (req, res, next) => {
   try {
-    sendJsonResponse(200, { data: 'good' }, res);
+    const accountId = req.dataValues.id;
+
+    const orders = await orderDataService.getAccountOrders(accountId);
+
+    sendJsonResponse(200, { data: orders, count: orders.count }, res);
   } catch (error) {
     next(sendErrorResponse(500, error.message));
   }
@@ -15,7 +20,9 @@ exports.getOrders = async (req, res, next) => {
 
 exports.getOrderByFlight = async (req, res, next) => {
   try {
-  } catch (error) {}
+  } catch (error) {
+    next(sendErrorResponse(500, error.message));
+  }
 };
 
 exports.placeOrder = async (req, res, next) => {
@@ -65,22 +72,32 @@ exports.placeOrder = async (req, res, next) => {
     const pendingFlights = await orderDataService.getOrderFlights(
       registeredOrder
     );
-    console.log(
-      'pending flights: ',
-      pendingFlights.map((f) => f.dataValues)
-    );
 
     // Send order email.
     const emailOptions = {
-      type: 'newAccount',
+      type: 'newOrder',
       email: emailRecipient,
       flights: pendingFlights,
-       travelers
+      travelers,
     };
 
     const emailSettings = mailService.getEmailSettings(emailOptions);
     const transporter = mailService.getTransporter();
 
-    sendJsonResponse(200, { data: registeredOrder }, res);
+    transporter.verify((error, success) => {
+      if (error) {
+        return next(sendErrorResponse(500, `SMTP connection error. ${error}`));
+      } else {
+        console.log(chalk.green.inverse('SMTP connection ready'));
+      }
+    });
+
+    transporter.sendMail(emailSettings, (error, info) => {
+      if (error) {
+        return next(sendErrorResponse(500));
+      } else {
+        sendJsonResponse(201, { data: registeredOrder }, res);
+      }
+    });
   } catch (error) {}
 };
